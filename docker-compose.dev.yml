@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:12
+    restart: always
+    container_name: postgres-townbottari
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db_data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=sumin
+      - POSTGRES_PASSWORD=200724s
+      - POSTGRES_DB=townbottari
+  townbottari:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    container_name: townbottari-server
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./:/app
+    restart: always
+    env_file:
+      - ./src/main/resources/env.properties
+      - ./src/main/resources/application.yml
+      - ./src/main/resources/application.properties
+    depends_on:
+      - db
