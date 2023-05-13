@@ -10,8 +10,8 @@ services:
     volumes:
       - ./db_data:/var/lib/postgres/data
     environment:
-      - POSTGRES_USER=sumin
-      - POSTGRES_PASSWORD=200724s
+      - POSTGRES_USER=$${datasource.username}
+      - POSTGRES_PASSWORD=$${datasource.password}
       - POSTGRES_DB=townbottari
   townbottari:
     build:
