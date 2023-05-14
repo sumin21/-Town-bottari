@@ -2,6 +2,7 @@ package com.backend.townbottari.domain.user;
 
 
 import com.backend.townbottari.domain.BaseTimeEntity;
+import com.backend.townbottari.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @DynamicInsert
@@ -40,6 +43,8 @@ public class User extends BaseTimeEntity {
     @ColumnDefault("0")
     private Long money;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
     public static User createKakaoUser(String kakaoId, String nickname) {
         return User.builder()

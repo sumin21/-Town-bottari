@@ -2,6 +2,7 @@ package com.backend.townbottari.domain.post;
 
 import com.backend.townbottari.domain.BaseTimeEntity;
 import com.backend.townbottari.domain.user.User;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Post extends BaseTimeEntity {
 
     @Column(name = "is_end", nullable = false)
     @ColumnDefault("False")
-    private boolean isEnd;
+    private Boolean isEnd;
 
     @Column(name = "arrive_addr", nullable = false)
     private String arriveAddr;
@@ -40,13 +41,13 @@ public class Post extends BaseTimeEntity {
     private LocalDateTime arriveTime;
 
     @Column(name = "hope_num", nullable = false)
-    private int hopeNum;
+    private Integer hopeNum;
 
     @Column(name = "end_num", nullable = false)
-    private int endNum;
+    private Integer endNum;
 
     @Column(nullable = false)
-    private int charge;
+    private Integer charge;
 
     @Column(name = "contact_url", nullable = false)
     private String contactUrl;
@@ -55,11 +56,11 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Post createPost(String title, String content, String arriveAddr, String wayAddr, LocalDateTime arriveTime, int hopeNum, int endNum, int charge, String contactUrl, User user) {
+    public static Post createPost(String title, String content, String arriveAddr, String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge, String contactUrl, User user) {
         return Post.builder()
                 .title(title)
                 .content(content)
-                .isEnd(false)
+                .isEnd(Boolean.FALSE)
                 .arriveAddr(arriveAddr)
                 .wayAddr(wayAddr)
                 .arriveTime(arriveTime)

@@ -5,7 +5,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -28,20 +30,23 @@ public class PostRequestDto {
     private String wayAddr;
 
     @ApiModelProperty(value = "도착 예정시간")
-    @NotBlank
+    @NotNull
     private LocalDateTime arriveTime;
 
     @ApiModelProperty(value = "희망 인원")
-    @NotBlank
-    private int hopeNum;
+    @NotNull
+    @Min(0)
+    private Integer hopeNum;
 
     @ApiModelProperty(value = "거래완료 인원")
-    @NotBlank
-    private int endNum;
+    @NotNull
+    @Min(0)
+    private Integer endNum;
 
     @ApiModelProperty(value = "수고비")
-    @NotBlank
-    private int charge;
+    @NotNull
+    @Min(0)
+    private Integer charge;
 
     @ApiModelProperty(value = "카카오톡 오픈채팅 url")
     @NotBlank
