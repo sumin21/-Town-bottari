@@ -1,5 +1,6 @@
 package com.backend.townbottari.controller;
 
+import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.user.dto.KakaoLoginRequestDto;
 import com.backend.townbottari.domain.user.dto.LoginResponseDto;
@@ -66,6 +67,13 @@ public class UserController {
     @ApiOperation(value = "사용자 게시글 조회 API", response = UserProfileResponseDto.class)
     public ResponseEntity<MultiplePageResult<PostListResponseDto>> getUsersPosts(@AuthenticationPrincipal Long userId, @PageableDefault(size=10) Pageable pageable) {
         Page<PostListResponseDto> result = userService.getUsersPosts(userId, pageable);
+        return ResponseEntity.ok(responseService.getMultiplePageResult(result));
+    }
+
+    @GetMapping("/forms")
+    @ApiOperation(value = "사용자 신청서 조회 API", response = FormResponseDto.class)
+    public ResponseEntity<MultiplePageResult<FormResponseDto>> getUsersForms(@AuthenticationPrincipal Long userId, @PageableDefault(size=10) Pageable pageable) {
+        Page<FormResponseDto> result = userService.getUsersForms(userId, pageable);
         return ResponseEntity.ok(responseService.getMultiplePageResult(result));
     }
 

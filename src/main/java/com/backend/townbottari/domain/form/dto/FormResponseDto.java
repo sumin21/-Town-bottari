@@ -110,4 +110,21 @@ public class FormResponseDto {
                 .createdDate(form.getCreatedDate())
                 .build();
     }
+
+    public static FormResponseDto fromForList(Form form) {
+        return FormResponseDto.builder()
+                .formId(form.getId())
+                .postId(form.getPost().getId())
+                .userId(form.getUser().getId())
+                .content(form.getContent())
+                .storeAddr(form.getStoreAddr())
+                .charge(form.getCharge())
+                .isAccept(form.getIsAccept())
+                .isCancel(form.getIsCancel())
+                .cancelReason(form.getCancelReason())
+                .cancelPosition(form.getCancelPosition())
+                .isEnd(form.getIsEnd())
+                .createdDate(form.getCreatedDate())
+                .build();
+    }
 }

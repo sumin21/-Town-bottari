@@ -1,5 +1,7 @@
 package com.backend.townbottari.service;
 
+import com.backend.townbottari.domain.form.Form;
+import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.Post;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.user.Role;
@@ -11,6 +13,7 @@ import com.backend.townbottari.exception.BusinessException;
 import com.backend.townbottari.exception.ExceptionCode;
 import com.backend.townbottari.exception.NotFoundException;
 import com.backend.townbottari.jwt.JwtTokenProvider;
+import com.backend.townbottari.repository.form.FormRepository;
 import com.backend.townbottari.repository.post.PostRepository;
 import com.backend.townbottari.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final FormRepository formRepository;
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -74,5 +78,10 @@ public class UserService {
     public Page<PostListResponseDto> getUsersPosts(Long userId, Pageable page) {
         Page<Post> postPage = postRepository.findByUserId(userId, page);
         return postPage.map(PostListResponseDto::from);
+    }
+
+    public Page<FormResponseDto> getUsersForms(Long userId, Pageable page) {
+        Page<Form> formPage = formRepository.findByUserId(userId, page);
+        return formPage.map(FormResponseDto::fromForList);
     }
 }
