@@ -1,5 +1,6 @@
 package com.backend.townbottari.controller;
 
+import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.post.dto.PostRequestDto;
 import com.backend.townbottari.domain.post.dto.PostResponseDto;
@@ -75,5 +76,12 @@ public class PostController {
             @AuthenticationPrincipal Long userId, @PathVariable Long postId) {
         postService.deletePost(userId, postId);
         return ResponseEntity.ok(responseService.getSuccessResult());
+    }
+
+    @GetMapping("/{postId}/forms")
+    @ApiOperation(value = "해당 게시글의 신청서 목록 조회 API", response = FormResponseDto.class)
+    public ResponseEntity<MultiplePageResult<FormResponseDto>> getPostsForms(@AuthenticationPrincipal Long userId, @PathVariable Long postId, @PageableDefault(size=10) Pageable pageable) {
+        Page<FormResponseDto> result = postService.getPostsForms(userId, postId, pageable);
+        return ResponseEntity.ok(responseService.getMultiplePageResult(result));
     }
 }

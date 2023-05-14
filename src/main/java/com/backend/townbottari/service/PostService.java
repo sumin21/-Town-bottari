@@ -1,5 +1,7 @@
 package com.backend.townbottari.service;
 
+import com.backend.townbottari.domain.form.Form;
+import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.Post;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.post.dto.PostRequestDto;
@@ -8,6 +10,7 @@ import com.backend.townbottari.domain.user.User;
 import com.backend.townbottari.exception.BusinessException;
 import com.backend.townbottari.exception.ExceptionCode;
 import com.backend.townbottari.exception.NotFoundException;
+import com.backend.townbottari.repository.form.FormRepository;
 import com.backend.townbottari.repository.post.PostRepository;
 import com.backend.townbottari.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ import java.util.Objects;
 public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final FormRepository formRepository;
 
 
     public PostResponseDto savePost(Long userId, PostRequestDto requestDto) {
@@ -98,5 +102,13 @@ public class PostService {
         }
 
         return postPage.map(PostListResponseDto::from);
+    }
+
+    public Page<FormResponseDto> getPostsForms(Long userId, Long postId, Pageable page) {
+        postRepository.findById(postId).orElseThrow(NotFoundException::new);
+
+        Page<Form> formPage = formRepository.findByPostId(postId, page);
+
+        return formPage.map(FormResponseDto::fromForList);
     }
 }
