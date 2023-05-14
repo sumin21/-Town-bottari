@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
-//    private final PostService postService;
     private final ResponseService responseService;
 
 
