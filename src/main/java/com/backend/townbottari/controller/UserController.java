@@ -2,9 +2,11 @@ package com.backend.townbottari.controller;
 
 import com.backend.townbottari.domain.user.dto.KakaoLoginRequestDto;
 import com.backend.townbottari.domain.user.dto.LoginResponseDto;
+import com.backend.townbottari.domain.user.dto.UpdateUserNickNameDto;
 import com.backend.townbottari.domain.user.dto.UserProfileResponseDto;
 import com.backend.townbottari.service.UserService;
 import com.backend.townbottari.service.result.ResponseService;
+import com.backend.townbottari.service.result.Result;
 import com.backend.townbottari.service.result.SingleResult;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,22 @@ public class UserController {
         UserProfileResponseDto result = userService.findUsersProfile(userId);
         return ResponseEntity.ok(responseService.getSingleResult(result));
 
+    }
+
+    @PatchMapping("/profile")
+    @ApiOperation(value = "사용자 닉네임 수정 API", response = Result.class)
+    public ResponseEntity<Result> updateUserNickName(
+            @AuthenticationPrincipal Long userId, @RequestBody @Valid UpdateUserNickNameDto request) {
+        userService.updateUserNickName(userId, request);
+        return ResponseEntity.ok(responseService.getSuccessResult());
+    }
+
+    @PostMapping("/resign")
+    @ApiOperation(value = "사용자 탈퇴 API", response = Result.class)
+    public ResponseEntity<Result> deleteUser(
+            @AuthenticationPrincipal Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(responseService.getSuccessResult());
     }
 
 }

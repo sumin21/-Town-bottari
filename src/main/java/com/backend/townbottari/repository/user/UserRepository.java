@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByRoleAndSocialId(Role role, String socialId);
+    Optional<User> findByNickname(String nickname);
 
     @Query(value = "SELECT u.refresh_token FROM Users u WHERE u.id = :id", nativeQuery = true)
     String findRefreshTokenById(@Param("id") Long userId);
