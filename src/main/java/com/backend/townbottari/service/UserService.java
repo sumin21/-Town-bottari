@@ -1,5 +1,7 @@
 package com.backend.townbottari.service;
 
+import com.backend.townbottari.domain.post.Post;
+import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.user.Role;
 import com.backend.townbottari.domain.user.User;
 import com.backend.townbottari.domain.user.dto.LoginResponseDto;
@@ -9,8 +11,11 @@ import com.backend.townbottari.exception.BusinessException;
 import com.backend.townbottari.exception.ExceptionCode;
 import com.backend.townbottari.exception.NotFoundException;
 import com.backend.townbottari.jwt.JwtTokenProvider;
+import com.backend.townbottari.repository.post.PostRepository;
 import com.backend.townbottari.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +26,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -63,5 +69,10 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public Page<PostListResponseDto> getUsersPosts(Long userId, Pageable page) {
+        Page<Post> postPage = postRepository.findByUserId(userId, page);
+        return postPage.map(PostListResponseDto::from);
     }
 }

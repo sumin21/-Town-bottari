@@ -44,7 +44,7 @@ public class PostController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "게시글 개시 API", response = PostResponseDto.class)
+    @ApiOperation(value = "게시글 게시 API", response = PostResponseDto.class)
     public ResponseEntity<SingleResult<PostResponseDto>> savePost(@AuthenticationPrincipal Long userId, @RequestBody @Valid PostRequestDto request) {
         PostResponseDto result = postService.savePost(userId, request);
         return ResponseEntity.ok(responseService.getSingleResult(result));
