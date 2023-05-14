@@ -77,9 +77,14 @@ public class PostResponseDto {
     @NotBlank
     private Boolean isWriter;
 
+    @ApiModelProperty(value = "작성 시간")
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime createdDate;
+
     @Builder
     public PostResponseDto(Long postId, Long userId, String title, String content, Boolean isEnd, String arriveAddr,
-                           String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge, String contactUrl, Boolean isWriter) {
+                           String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge, String contactUrl, Boolean isWriter, LocalDateTime createdDate) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -93,6 +98,7 @@ public class PostResponseDto {
         this.charge = charge;
         this.contactUrl = contactUrl;
         this.isWriter = isWriter;
+        this.createdDate = createdDate;
     }
 
     public static PostResponseDto from(Post post, Long userId) {
@@ -110,6 +116,7 @@ public class PostResponseDto {
                 .charge(post.getCharge())
                 .contactUrl(post.getContactUrl())
                 .isWriter(Objects.equals(post.getUser().getId(), userId))
+                .createdDate(post.getCreatedDate())
                 .build();
     }
 }

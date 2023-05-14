@@ -1,6 +1,7 @@
 package com.backend.townbottari.domain.post;
 
 import com.backend.townbottari.domain.BaseTimeEntity;
+import com.backend.townbottari.domain.form.Form;
 import com.backend.townbottari.domain.user.User;
 import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @DynamicInsert
 @Embeddable
@@ -55,6 +58,9 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Form> forms = new ArrayList<>();
 
     public static Post createPost(String title, String content, String arriveAddr, String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge, String contactUrl, User user) {
         return Post.builder()

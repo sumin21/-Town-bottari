@@ -2,6 +2,7 @@ package com.backend.townbottari.domain.user;
 
 
 import com.backend.townbottari.domain.BaseTimeEntity;
+import com.backend.townbottari.domain.form.Form;
 import com.backend.townbottari.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +46,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Form> forms = new ArrayList<>();
 
     public static User createKakaoUser(String kakaoId, String nickname) {
         return User.builder()

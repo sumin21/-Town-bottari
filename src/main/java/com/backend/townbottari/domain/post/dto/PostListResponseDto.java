@@ -66,9 +66,14 @@ public class PostListResponseDto {
     @Min(0)
     private Integer charge;
 
+    @ApiModelProperty(value = "작성 시간")
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime createdDate;
+
     @Builder
     public PostListResponseDto(Long postId, Long userId, String title, String content, Boolean isEnd, String arriveAddr,
-                           String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge) {
+                           String wayAddr, LocalDateTime arriveTime, Integer hopeNum, Integer endNum, Integer charge, LocalDateTime createdDate) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -80,6 +85,7 @@ public class PostListResponseDto {
         this.hopeNum = hopeNum;
         this.endNum = endNum;
         this.charge = charge;
+        this.createdDate = createdDate;
     }
 
     public static PostListResponseDto from(Post post) {
@@ -95,6 +101,7 @@ public class PostListResponseDto {
                 .hopeNum(post.getHopeNum())
                 .endNum(post.getEndNum())
                 .charge(post.getCharge())
+                .createdDate(post.getCreatedDate())
                 .build();
     }
 }
