@@ -1,6 +1,7 @@
 package com.backend.townbottari.service;
 
 import com.backend.townbottari.domain.form.Form;
+import com.backend.townbottari.domain.form.dto.FormListResponseDto;
 import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.Post;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
@@ -80,8 +81,8 @@ public class UserService {
         return postPage.map(PostListResponseDto::from);
     }
 
-    public Page<FormResponseDto> getUsersForms(Long userId, Pageable page) {
+    public Page<FormListResponseDto> getUsersForms(Long userId, Pageable page) {
         Page<Form> formPage = formRepository.findByUserId(userId, page);
-        return formPage.map(FormResponseDto::fromForList);
+        return formPage.map(FormListResponseDto::from);
     }
 }

@@ -15,5 +15,7 @@ import java.util.Optional;
 public interface FormRepository extends JpaRepository<Form, Long> {
     Page<Form> findByUserId(@Param("userId") Long userId, Pageable pageable);
     Page<Form> findByPostId(@Param("postId") Long postId, Pageable pageable);
+    Page<Form> findByPost_User_IdAndIsAcceptTrueAndIsCancelFalseAndIsEndFalse(@Param("userId") Long userId, Pageable pageable);
+    Page<Form> findByUserIdAndIsAcceptTrueAndIsCancelFalseAndIsEndFalse(@Param("userId") Long userId, Pageable pageable);
 
 }

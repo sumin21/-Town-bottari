@@ -14,12 +14,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
-
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FormResponseDto {
+public class FormListResponseDto {
     @ApiModelProperty(value = "신청서 id")
     @NotBlank
     private Long formId;
@@ -65,19 +63,15 @@ public class FormResponseDto {
     @NotBlank
     private Boolean isEnd;
 
-    @ApiModelProperty(value = "작성자여부")
-    @NotBlank
-    private Boolean isWriter;
-
     @ApiModelProperty(value = "작성 시간")
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
     @Builder
-    public FormResponseDto(Long formId, Long postId, Long userId, String content, String storeAddr, Integer charge,
+    public FormListResponseDto(Long formId, Long postId, Long userId, String content, String storeAddr, Integer charge,
                            Boolean isAccept, Boolean isCancel, CancelReason cancelReason, CancelPosition cancelPosition,
-                           Boolean isEnd, Boolean isWriter, LocalDateTime createdDate) {
+                           Boolean isEnd, LocalDateTime createdDate) {
         this.formId = formId;
         this.postId = postId;
         this.userId = userId;
@@ -89,12 +83,11 @@ public class FormResponseDto {
         this.cancelReason = cancelReason;
         this.cancelPosition = cancelPosition;
         this.isEnd = isEnd;
-        this.isWriter = isWriter;
         this.createdDate = createdDate;
     }
 
-    public static FormResponseDto from(Form form, Long userId) {
-        return FormResponseDto.builder()
+    public static FormListResponseDto from(Form form) {
+        return FormListResponseDto.builder()
                 .formId(form.getId())
                 .postId(form.getPost().getId())
                 .userId(form.getUser().getId())
@@ -106,7 +99,6 @@ public class FormResponseDto {
                 .cancelReason(form.getCancelReason())
                 .cancelPosition(form.getCancelPosition())
                 .isEnd(form.getIsEnd())
-                .isWriter(Objects.equals(form.getUser().getId(), userId))
                 .createdDate(form.getCreatedDate())
                 .build();
     }

@@ -1,11 +1,13 @@
 package com.backend.townbottari.service;
 
 import com.backend.townbottari.domain.form.Form;
+import com.backend.townbottari.domain.form.dto.FormListResponseDto;
 import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.Post;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.post.dto.PostRequestDto;
 import com.backend.townbottari.domain.post.dto.PostResponseDto;
+import com.backend.townbottari.domain.post.dto.PostUpdateRequestDto;
 import com.backend.townbottari.domain.user.User;
 import com.backend.townbottari.exception.BusinessException;
 import com.backend.townbottari.exception.ExceptionCode;
@@ -46,7 +48,7 @@ public class PostService {
         return PostResponseDto.from(post, userId);
     }
 
-    public PostResponseDto updatePost(Long userId, Long postId, PostRequestDto requestDto) {
+    public PostResponseDto updatePost(Long userId, Long postId, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(postId).orElseThrow(NotFoundException::new);
         if (!Objects.equals(userId, post.getUser().getId())) {
             throw new BusinessException(ExceptionCode.INVALID_INPUT_VALUE);
@@ -54,6 +56,7 @@ public class PostService {
 
         post.setTitle(requestDto.getTitle());
         post.setContent(requestDto.getContent());
+        post.setIsEnd(requestDto.getIsEnd());
         post.setArriveAddr(requestDto.getArriveAddr());
         post.setWayAddr(requestDto.getWayAddr());
         post.setArriveTime(requestDto.getArriveTime());
@@ -104,11 +107,11 @@ public class PostService {
         return postPage.map(PostListResponseDto::from);
     }
 
-    public Page<FormResponseDto> getPostsForms(Long userId, Long postId, Pageable page) {
+    public Page<FormListResponseDto> getPostsForms(Long userId, Long postId, Pageable page) {
         postRepository.findById(postId).orElseThrow(NotFoundException::new);
 
         Page<Form> formPage = formRepository.findByPostId(postId, page);
 
-        return formPage.map(FormResponseDto::fromForList);
+        return formPage.map(FormListResponseDto::from);
     }
 }

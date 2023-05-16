@@ -1,10 +1,12 @@
 package com.backend.townbottari.controller;
 
+import com.backend.townbottari.domain.form.dto.FormListResponseDto;
 import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
 import com.backend.townbottari.domain.post.dto.PostRequestDto;
 import com.backend.townbottari.domain.post.dto.PostResponseDto;
 
+import com.backend.townbottari.domain.post.dto.PostUpdateRequestDto;
 import com.backend.townbottari.service.PostService;
 import com.backend.townbottari.service.result.MultiplePageResult;
 import com.backend.townbottari.service.result.ResponseService;
@@ -64,7 +66,7 @@ public class PostController {
     public ResponseEntity<SingleResult<PostResponseDto>> updatePost(
             @AuthenticationPrincipal Long userId,
             @PathVariable Long postId,
-            @RequestBody @Valid PostRequestDto request) {
+            @RequestBody @Valid PostUpdateRequestDto request) {
 
         PostResponseDto result = postService.updatePost(userId, postId, request);
         return ResponseEntity.ok(responseService.getSingleResult(result));
@@ -79,9 +81,9 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/forms")
-    @ApiOperation(value = "해당 게시글의 신청서 목록 조회 API", response = FormResponseDto.class)
-    public ResponseEntity<MultiplePageResult<FormResponseDto>> getPostsForms(@AuthenticationPrincipal Long userId, @PathVariable Long postId, @PageableDefault(size=10) Pageable pageable) {
-        Page<FormResponseDto> result = postService.getPostsForms(userId, postId, pageable);
+    @ApiOperation(value = "해당 게시글의 신청서 목록 조회 API", response = FormListResponseDto.class)
+    public ResponseEntity<MultiplePageResult<FormListResponseDto>> getPostsForms(@AuthenticationPrincipal Long userId, @PathVariable Long postId, @PageableDefault(size=10) Pageable pageable) {
+        Page<FormListResponseDto> result = postService.getPostsForms(userId, postId, pageable);
         return ResponseEntity.ok(responseService.getMultiplePageResult(result));
     }
 }

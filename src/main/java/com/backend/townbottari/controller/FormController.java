@@ -4,7 +4,6 @@ import com.backend.townbottari.domain.form.dto.FormRequestDto;
 import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.form.dto.FormUpdateRequestDto;
 import com.backend.townbottari.service.FormService;
-import com.backend.townbottari.service.PostService;
 import com.backend.townbottari.service.result.ResponseService;
 import com.backend.townbottari.service.result.Result;
 import com.backend.townbottari.service.result.SingleResult;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 @RequestMapping("api/forms")
 @RestController
 public class FormController {
-    private final PostService postService;
     private final FormService formService;
     private final ResponseService responseService;
 
