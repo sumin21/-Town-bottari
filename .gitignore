@@ -38,6 +38,3 @@ out/
 
 ### ENV ###
 env.properties
-
-### .jar ###
-!build/libs/

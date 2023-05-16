@@ -48,4 +48,12 @@ public class DeliveryController {
         return ResponseEntity.ok(responseService.getSuccessResult());
     }
 
+    @PostMapping("/{formId}/cancel-acceptance")
+    @ApiOperation(value = "거래 파기 수락 API", response = Result.class)
+    public ResponseEntity<Result> acceptCancelDeliveries(
+            @AuthenticationPrincipal Long userId, @PathVariable Long formId, @RequestBody @Valid AcceptCancelDeliveryRequestDto requestDto) {
+        deliveryService.acceptCancelDeliveries(userId, formId, requestDto);
+        return ResponseEntity.ok(responseService.getSuccessResult());
+    }
+
 }
