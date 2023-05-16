@@ -3,6 +3,7 @@ package com.backend.townbottari.controller;
 import com.backend.townbottari.domain.form.dto.FormListResponseDto;
 import com.backend.townbottari.domain.form.dto.FormResponseDto;
 import com.backend.townbottari.domain.post.dto.PostListResponseDto;
+import com.backend.townbottari.domain.review.dto.ReviewResponseDto;
 import com.backend.townbottari.domain.user.dto.KakaoLoginRequestDto;
 import com.backend.townbottari.domain.user.dto.LoginResponseDto;
 import com.backend.townbottari.domain.user.dto.UpdateUserNickNameDto;
@@ -75,6 +76,13 @@ public class UserController {
     @ApiOperation(value = "사용자 신청서 조회 API", response = FormListResponseDto.class)
     public ResponseEntity<MultiplePageResult<FormListResponseDto>> getUsersForms(@AuthenticationPrincipal Long userId, @PageableDefault(size=10) Pageable pageable) {
         Page<FormListResponseDto> result = userService.getUsersForms(userId, pageable);
+        return ResponseEntity.ok(responseService.getMultiplePageResult(result));
+    }
+
+    @GetMapping("/reviews")
+    @ApiOperation(value = "사용자가 작성한 리뷰 목록 조회 API", response = ReviewResponseDto.class)
+    public ResponseEntity<MultiplePageResult<ReviewResponseDto>> getUsersReviews(@AuthenticationPrincipal Long userId, @PageableDefault(size=10) Pageable pageable) {
+        Page<ReviewResponseDto> result = userService.getUsersReviews(userId, pageable);
         return ResponseEntity.ok(responseService.getMultiplePageResult(result));
     }
 
