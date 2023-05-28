@@ -54,11 +54,11 @@ public class FormResponseDto {
     private Boolean isCancel;
 
     @ApiModelProperty(value = "파기사유")
-    @NotBlank
+    @NotNull
     private CancelReason cancelReason;
 
     @ApiModelProperty(value = "파기신청자")
-    @NotBlank
+    @NotNull
     private CancelPosition cancelPosition;
 
     @ApiModelProperty(value = "거래종료여부")
