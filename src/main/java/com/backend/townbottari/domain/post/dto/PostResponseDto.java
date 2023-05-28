@@ -38,7 +38,7 @@ public class PostResponseDto {
     private String content;
 
     @ApiModelProperty(value = "거래여부")
-    @NotBlank
+    @NotNull
     private Boolean isEnd;
 
     @ApiModelProperty(value = "도착지")
@@ -74,7 +74,7 @@ public class PostResponseDto {
     private String contactUrl;
 
     @ApiModelProperty(value = "작성자여부")
-    @NotBlank
+    @NotNull
     private Boolean isWriter;
 
     @ApiModelProperty(value = "작성 시간")

@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Getter
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class AcceptCancelDeliveryRequestDto {
 
     @ApiModelProperty(value = "파기 수락 여부")
-    @NotBlank
+    @NotNull
     private Boolean isAccept;
 
 }

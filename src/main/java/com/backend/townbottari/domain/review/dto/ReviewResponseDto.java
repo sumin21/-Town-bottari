@@ -41,7 +41,7 @@ public class ReviewResponseDto {
     private Integer score;
 
     @ApiModelProperty(value = "댓글 작성자여부")
-    @NotBlank
+    @NotNull
     private Boolean isWriter;
 
     @ApiModelProperty(value = "작성 시간")

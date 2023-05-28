@@ -23,7 +23,7 @@ public class PostUpdateRequestDto {
     private String content;
 
     @ApiModelProperty(value = "거래종료 여부")
-    @NotBlank
+    @NotNull
     private Boolean isEnd;
 
     @ApiModelProperty(value = "도착지")

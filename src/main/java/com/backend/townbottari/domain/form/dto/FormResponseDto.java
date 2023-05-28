@@ -46,11 +46,11 @@ public class FormResponseDto {
     private Integer charge;
 
     @ApiModelProperty(value = "수락여부")
-    @NotBlank
+    @NotNull
     private Boolean isAccept;
 
     @ApiModelProperty(value = "파기여부")
-    @NotBlank
+    @NotNull
     private Boolean isCancel;
 
     @ApiModelProperty(value = "파기사유")
@@ -62,11 +62,11 @@ public class FormResponseDto {
     private CancelPosition cancelPosition;
 
     @ApiModelProperty(value = "거래종료여부")
-    @NotBlank
+    @NotNull
     private Boolean isEnd;
 
     @ApiModelProperty(value = "작성자여부")
-    @NotBlank
+    @NotNull
     private Boolean isWriter;
 
     @ApiModelProperty(value = "작성 시간")

@@ -35,7 +35,7 @@ public class PostListResponseDto {
     private String content;
 
     @ApiModelProperty(value = "거래여부")
-    @NotBlank
+    @NotNull
     private Boolean isEnd;
 
     @ApiModelProperty(value = "도착지")
