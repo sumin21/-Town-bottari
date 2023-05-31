@@ -89,4 +89,21 @@ public class DeliveryService {
             throw new BusinessException(ExceptionCode.INVALID_INPUT_VALUE);
         }
     }
+
+    public void successDeliveries(Long userId, Long formId) {
+        Form form = formRepository.findById(formId).orElseThrow(NotFoundException::new);
+
+        // 수락 && 파기전 && 종료전 상태여야 파기 가능
+        if (!form.getIsAccept() && form.getIsCancel() && form.getIsEnd()) throw new BusinessException(ExceptionCode.INVALID_INPUT_VALUE);
+        // 신청자 측에서만 완료 가능
+        else if (Objects.equals(userId, form.getUser().getId())) {
+            form.setIsEnd(true);
+            formRepository.save(form);
+        }
+        else if (Objects.equals(userId, form.getPost().getUser().getId())) throw new BusinessException(ExceptionCode.INVALID_INPUT_VALUE);
+        else {
+            // 아무도 아닌 경우
+            throw new BusinessException(ExceptionCode.INVALID_INPUT_VALUE);
+        }
+    }
 }

@@ -56,4 +56,11 @@ public class DeliveryController {
         return ResponseEntity.ok(responseService.getSuccessResult());
     }
 
+    @PostMapping("/{formId}/success")
+    @ApiOperation(value = "거래 완료 API", response = Result.class)
+    public ResponseEntity<Result> successDeliveries(
+            @AuthenticationPrincipal Long userId, @PathVariable Long formId) {
+        deliveryService.successDeliveries(userId, formId);
+        return ResponseEntity.ok(responseService.getSuccessResult());
+    }
 }
